@@ -1,8 +1,9 @@
 {
   "name": "tkterminalcommands",
   "displayName": "TKTerminalCommands",
-  "description": "",
-  "version": "0.0.1",
+  "description": "Common Terminal Commands as Buttons",
+  "publisher": "Tony Korologos",
+  "version": "0.0.2",
   "tasks": [
     {
       "label": "npm: watch",
@@ -13,7 +14,7 @@
     }
   ],
   "engines": {
-    "vscode": "^1.97.0"
+    "vscode": ">=1.96.2"
   },
   "categories": [
     "Other"
@@ -30,7 +31,7 @@
       },
       {
         "command": "extension.runPodInstall",
-        "title": "Run pod install --repo-upgrade"
+        "title": "Run pod install --repo-update"
       },
       {
         "command": "extension.cleanProject",
@@ -50,7 +51,7 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.97.0",
+    "@types/vscode": "^1.96.2",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
@@ -62,5 +63,9 @@
     "webpack-cli": "^6.0.1",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.4.1"
-  }
+  },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/tkserver/tkvscodetermcommands"
+}
 }

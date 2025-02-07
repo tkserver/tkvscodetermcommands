@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 
-// This interface defines each custom terminal command
 interface TerminalCommand {
   commandId: string;
+  // A terminal name is still useful when creating a new terminal if none is active.
   terminalName: string;
   commandText: string;
   buttonText: string;
@@ -10,43 +10,59 @@ interface TerminalCommand {
 }
 
 export function activate(context: vscode.ExtensionContext) {
-	console.log('Custom terminal extension activated!');
-
-  // Define the commands you want to create buttons for.
   const terminalCommands: TerminalCommand[] = [
     {
       commandId: 'extension.runNpmIos',
-      terminalName: 'Terminal - npm run ios',
+      terminalName: 'Default Terminal',
       commandText: 'npm run ios',
       buttonText: '$(terminal) npm run ios',
       tooltip: 'Run "npm run ios"',
     },
     {
+      commandId: 'extension.runNpmAndroid',
+      terminalName: 'Default Terminal',
+      commandText: 'npm run android',
+      buttonText: '$(terminal) npm run android',
+      tooltip: 'Run "npm run android"',
+    },
+    {
+      commandId: 'extension.runExpoPrebuild',
+      terminalName: 'Default Terminal',
+      commandText: 'expo prebuild --clean',
+      buttonText: '$(terminal) Expo Prebuild',
+      tooltip: 'Run "expo prebuild"',
+    },
+    {
       commandId: 'extension.runPodInstall',
-      terminalName: 'Terminal - pod install',
-      commandText: 'pod install --repo-upgrade',
-      buttonText: '$(terminal) pod install',
-      tooltip: 'Run "pod install --repo-upgrade"',
+      terminalName: 'Default Terminal',
+      commandText: 'pod install --repo-update',
+      buttonText: '$(terminal) pod install --repo-update',
+      tooltip: 'Run "pod install --repo-update"',
     },
     {
       commandId: 'extension.cleanProject',
-      terminalName: 'Terminal - Clean Project',
-      commandText: 'rm -rf node_modules ios .expo',
-      buttonText: '$(terminal) Clean Project',
+      terminalName: 'Default Terminal',
+      commandText: 'rm -rf node_modules ios',
+      buttonText: '$(terminal) rm node_modules ios',
       tooltip: 'Run "rm -rf node_modules ios .expo"',
     },
+    {
+      commandId: 'extension.runNpmInstall',
+      terminalName: 'Default Terminal',
+      commandText: 'npm install',
+      buttonText: '$(trashcan) npm install',
+      tooltip: 'Run "npm install"',
+    }
   ];
 
-  // Iterate over each command, register it, and create a corresponding status bar button.
   terminalCommands.forEach((cmd) => {
-    // Register the command with VS Code’s command palette.
     const disposable = vscode.commands.registerCommand(cmd.commandId, () => {
-      // Look for an existing terminal with the given name.
-      let terminal = vscode.window.terminals.find(t => t.name === cmd.terminalName);
+      // Use the active terminal if available.
+      let terminal = vscode.window.activeTerminal;
       if (!terminal) {
+        // If there is no active terminal, create one.
         terminal = vscode.window.createTerminal(cmd.terminalName);
       }
-      // Send the desired terminal command.
       terminal.sendText(cmd.commandText);
       terminal.show();
     });
